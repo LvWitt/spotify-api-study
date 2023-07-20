@@ -4,6 +4,7 @@
         <script src="//code.jquery.com/jquery-3.7.0.min.js"></script>
         <script src="pagination.js"></script>
         <script src="scripts.js"></script>
+        <script src="app.js"></script>
         <link rel="stylesheet" type="text/css" href="pagination.css">
         <link rel="stylesheet" type="text/css" href="styles.css">
     </head>
@@ -35,9 +36,14 @@
                     <header class="function-header">
                         <h1>Listening History</h1>
                     </header>
+                    <form>
+                        <label>start date</label>
+                        <input type="date" id="valueDateStart" ></input>
+                        <label>end date</label>
+                        <input type="date" id="valueDateEnd" ></input>
+                        <button type="button" class="btn-filter">filter</button>
+                    </form>
                     <div id="data-container">
-                        
-
                     </div>
                     <div id="pagination-container"></div>
                 </div>
