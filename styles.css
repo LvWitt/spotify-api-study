@@ -3,14 +3,14 @@
     height: 500px;
     text-align: center;
     border: 1px solid black;
-    margin: 50px 0px 0px 0px;
+    margin: 20px 0px 0px 0px;
 
 }
 
 .main-header, .stats-options, .fetch-options{
     border: 1px solid black;
     margin: -1px -1px -1px -1px;
-    padding:30px 0px 30px 0px;
+    padding:20px 0px 20px 0px;
 }
 
 
@@ -53,6 +53,18 @@
     color: #666;
 }
 
+.data-container li, td:first-child{
+    width: 200px;
+}
+
+.data-container li, td:nth-child(2){
+    width: 400px;
+}
+
+.data-container li, td:nth-child(3){
+    width: 120px;
+}
+
 .function-header {
     margin-right: auto;
     margin-left: 30px;
@@ -66,9 +78,9 @@
 }
 
 .topArtists-function {
-    display: none;
+    display: contents;
 }
 
 .topTracks-function {
-    display: contents;
+    display: none;
 }

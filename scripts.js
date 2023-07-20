@@ -1,48 +1,81 @@
-var items2 = []; 
 
 
+  function historyDataFunction(){
+    $.getJSON("spotify.json", function(data){
+      var spotifyData = []; 
+        const valueDateStart = $("#valueDateStart").val();
+        const valueDateEnd = $("#valueDateEnd").val();
+        console.log(valueDateStart);
 
-$.getJSON("spotify.json", function(data){
-    var dataHT = '<tr>';
-    for (var i = 0, len = data.length; i < len; i++) {
-        var dentro = [];
-        dataHT += '<td>' + data[i].artistName + '</td>'
-        + '<td>' + data[i].trackName + '</td>' 
-        + '<td>' + data[i].endTime + '</td>';
+        for (var i = 0, len = data.length; i < len; i++) {
+            var dentro = [];
+            if (testDateRange(valueDateStart, valueDateEnd, data[i].endTime)){
+              dentro.push(data[i].artistName);
+              dentro.push(data[i].trackName);
+              dentro.push(data[i].endTime);
+              spotifyData.push(dentro);
+            }
+          
+        }
 
-        dentro.push(data[i].artistName);
-        dentro.push(data[i].trackName);
-        dentro.push(data[i].endTime);
-        items2.push(dentro);
+        //console.log(spotifyData)
 
-        dataHT += '</tr>';
-        
-    }
+        function simpleTemplating(data) {
+          var html = '<table>' + '<thead>' + '<tr>' + '<th>Artist</th>' + '<th>Song</th>' + '<th>Date</th>' + '</tr>' + '</thread>' + '<tr>';
+            //console.log(data)
+          $.each(data, function(index, item){
+            var i = 0;
+              //console.log(item[i])
+              html += '<tr>' + '<td>'+ item[i] +'</td>' + '<td>'+ item[i+1] +'</td>' + '<td>'+ item[i+2] +'</td>' + '</tr>';
+            
+          });
+          html += '</tr>' + '</table>';
+          return html;
+        }
 
-    console.log(dataHT);
+        $('#pagination-container').pagination({
+          dataSource: spotifyData,
+          pageSize: 20,
+          callback: function(data, pagination) {
+              var html = simpleTemplating(data);
+              $('#data-container').html(html);
+          }
+        })
+      
+        function testDateRange(dateStart, dateEnd, date){
+          var rangeAcceptance = {
+            minValid: new Date(date) >= new Date(dateStart),
+            maxValid: new Date(date) <= new Date(dateEnd)
+            };
 
-    function simpleTemplating(data) {
-      var html = '<table>' + '<thead>' + '<tr>' + '<th>Artist</th>' + '<th>Song</th>' + '<th>Date</th>' + '</tr>' + '</thread>' + '<tr>';
-        console.log(data)
-      $.each(data, function(index, item){
-        var i = 0;
-          console.log(item[i])
-          html += '<tr>' + '<td>'+ item[i] +'</td>' + '<td>'+ item[i+1] +'</td>' + '<td>'+ item[i+2] +'</td>' + '</tr>';
-        
-      });
-      html += '</tr>' + '</table>';
-      return html;
-    }
+            //console.log(dateStart);
+            //console.log(dateEnd);
 
-    $('#pagination-container').pagination({
-      dataSource: items2,
-      pageSize: 20,
-      callback: function(data, pagination) {
-          var html = simpleTemplating(data);
-          $('#data-container').html(html);
-      }
-    })
-});
+            var acceptanceResult; //boolean to determine if the relevant range specified is valid
+      
+            if (dateStart !== "" && dateEnd !== "") {
+      
+            acceptanceResult = (rangeAcceptance.minValid && rangeAcceptance.maxValid);
+          
+            } else if (dateStart !== "") {
+          
+            acceptanceResult = rangeAcceptance.minValid;
+          
+            } else if (dateEnd !== "") {
+          
+            acceptanceResult = rangeAcceptance.maxValid;
+          
+            } else {
+          
+            acceptanceResult = true; //show all results if no specific range has been selected
+          
+            }
+      
+            console.log(acceptanceResult);
+            return (acceptanceResult);
+        }
+    });
+}
 
 $(document).ready(function(){
     function cleanDisplayFunction(){
@@ -54,16 +87,23 @@ $(document).ready(function(){
   $(".btn-history").click(function() {
     cleanDisplayFunction();
     $(".history-function").css('display', 'contents');
+    historyDataFunction();
+  });
+
+  $(".btn-filter").click(function(){
+    historyDataFunction();
+  });
+
+  $(".btn-topArtists").click(function() {
+      cleanDisplayFunction();
+      $(".topArtists-function").css('display', 'contents');
+  });
+
+  $(".btn-topTracks").click(function() {
+      cleanDisplayFunction();
+      $(".topTracks-function").css('display', 'contents');
+  });
+
 });
 
-    $(".btn-topArtists").click(function() {
-        cleanDisplayFunction();
-        $(".topArtists-function").css('display', 'contents');
-    });
 
-    $(".btn-topTracks").click(function() {
-        cleanDisplayFunction();
-        $(".topTracks-function").css('display', 'contents');
-    });
-
-});
