@@ -2,25 +2,8 @@
 
 const redirect_uri = "http://127.0.0.1:5500/index.html";
 const client_id = "aeda74075eec4ffa897944adb9682ba5";
-/*
-function authorize(){
-    //const redirect_uri = "https://lvwitt.github.io/spotify-api-study/";
-    const redirect_uri = "http://127.0.0.1:5500/index.html";
-    const client_id = "aeda74075eec4ffa897944adb9682ba5";
 
-    let url = 'https://accounts.spotify.com/authorize'
-    + '?response_type=code'
-    + '&client_id=' + encodeURIComponent(client_id)
-    + '&redirect_uri=' + encodeURIComponent(redirect_uri);
-    console.log(url)
-    
-//window.location = url;
-
- ;
-} 
-
-authorize()*/
-
+const loginPlaceholder = document.getElementById("login-content");
 
 function generateRandomString(length) {
     let text = '';
@@ -60,6 +43,7 @@ function requestAuthorization(){
         response_type: 'code',
         client_id: client_id,
         redirect_uri: redirect_uri,
+        scope: 'user-read-private user-read-email',
         state: state,
         code_challenge_method: 'S256',
         code_challenge: codeChallenge
@@ -70,13 +54,14 @@ function requestAuthorization(){
 }
 
 function requestAcessToken(){
+    console.log('2');
     let codeVerifier = localStorage.getItem('code_verifier');
 
     let body = new URLSearchParams({
     grant_type: 'authorization_code',
     code: code,
-    redirect_uri: redirectUri,
-    client_id: clientId,
+    redirect_uri: redirect_uri,
+    client_id: client_id,
     code_verifier: codeVerifier
     });
 
@@ -100,8 +85,13 @@ function requestAcessToken(){
         console.error('Error:', error);
     });
 
-    console.log("RESPONSE");
-    console.log(response);
+    //console.log("RESPONSE");
+    //console.log(response);
+    getProfile(response.access_token).then(async (data) => {
+        //loginPlaceholder.innerHTML = `<p>${data.display_name}</p>`;
+        var content = '<p> Logged in, ' + data.display_name + '!</p>';
+        $('#login-content').append(content);
+    });
     
 }
 
@@ -117,12 +107,13 @@ async function getProfile(accessToken) {
     const data = await response.json();
     console.log("DATA");
     console.log(data);
+    return data;
 }
-
-
-
 
 const urlParams = new URLSearchParams(window.location.search);
 let code = urlParams.get('code');
-console.log("CODE");
-console.log(code);
+//console.log("CODE");
+//console.log(code);
+if (code) {
+    requestAcessToken();
+}
