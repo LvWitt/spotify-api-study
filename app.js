@@ -37,13 +37,13 @@ function requestAuthorization(){
         let state = generateRandomString(16);
         //let scope = 'user-read-private user-read-email';
     
-        localStorage.setItem('code_verifier', codeVerifier);
+        window.localStorage.setItem('code_verifier', codeVerifier);
     
         let args = new URLSearchParams({
         response_type: 'code',
         client_id: client_id,
         redirect_uri: redirect_uri,
-        scope: 'user-read-private user-read-email',
+        scope: 'user-read-private user-read-email user-top-read',
         state: state,
         code_challenge_method: 'S256',
         code_challenge: codeChallenge
@@ -55,7 +55,7 @@ function requestAuthorization(){
 
 function requestAcessToken(){
     console.log('2');
-    let codeVerifier = localStorage.getItem('code_verifier');
+    let codeVerifier = window.localStorage.getItem('code_verifier');
 
     let body = new URLSearchParams({
     grant_type: 'authorization_code',
@@ -79,7 +79,8 @@ function requestAcessToken(){
         return response.json();
     })
     .then(data => {
-        localStorage.setItem('access_token', data.access_token);
+        window.localStorage.setItem('access_token', data.access_token);
+        console.log("acess token setado");
     })
     .catch(error => {
         console.error('Error:', error);
@@ -90,13 +91,62 @@ function requestAcessToken(){
     getProfile(response.access_token).then(async (data) => {
         //loginPlaceholder.innerHTML = `<p>${data.display_name}</p>`;
         var content = '<p> Logged in, ' + data.display_name + '!</p>';
+        $('#login-warning').remove();
+        $('#login-warning').remove();
+        $('#login-warning').remove();
+        $('#btn-login').css('display', 'none')
         $('#login-content').append(content);
     });
     
 }
+ /*
+function refreshToken() {
+    fetch('https://accounts.spotify.com/api/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      },
+      body: new URLSearchParams({
+        client_id,
+        grant_type: 'refresh_token',
+        refresh_token,
+      }),
+    })
+      .then(addThrowErrorToFetch)
+      .then(processTokenResponse)
+      .catch(handleError);
+  }
+
+function handleError(error) {
+    console.error(error);
+}
+
+async function addThrowErrorToFetch(response) {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw { response, error: await response.json() };
+    }
+}
+
+function processTokenResponse(data) {
+    console.log(data);
+
+    access_token = data.access_token;
+    refresh_token = data.refresh_token;
+
+    const t = new Date();
+    expires_at = t.setSeconds(t.getSeconds() + data.expires_in);
+
+    window.localStorage.setItem('access_token', access_token);
+    window.localStorage.setItem('refresh_token', refresh_token);
+    window.localStorage.setItem('expires_at', expires_at);
+
+}
+*/
 
 async function getProfile(accessToken) {
-    accessToken = localStorage.getItem('access_token');
+    accessToken = window.localStorage.getItem('access_token');
   
     const response = await fetch('https://api.spotify.com/v1/me', {
       headers: {
@@ -110,6 +160,39 @@ async function getProfile(accessToken) {
     return data;
 }
 
+function getTopArtists() {
+    accessToken = window.localStorage.getItem('access_token');
+    if (accessToken) {
+        let time_range = $("input[type='radio']:checked").val().toString();
+        console.log(time_range);
+        let limit = '10';
+        $.ajax({
+            url: 'https://api.spotify.com/v1/me/top/artists',
+            data: {
+            time_range: time_range,
+            limit: limit,
+            },
+            headers: {
+                Authorization: 'Bearer ' + accessToken,
+            },
+            success: function(response) {
+            $('#topArtists-results').empty();
+
+            let resultsHtml = '';
+            response.items.forEach((item, i) => {
+                let name = item.name;
+                let url = item.external_urls.spotify;
+                let image = item.images[1].url;
+                resultsHtml += '<div class="column wide artist item"><a href="' + url + '" target="_blank"><img src="' + image + '"></a><h4 class="title">' + (i + 1) + '. ' + name + '</h4></div>';
+            });
+            $('#topArtists-results').html(resultsHtml);
+            },
+        });
+    } else {
+      alert('Please log in to Spotify.');
+    }
+  }
+
 const urlParams = new URLSearchParams(window.location.search);
 let code = urlParams.get('code');
 //console.log("CODE");
@@ -117,3 +200,4 @@ let code = urlParams.get('code');
 if (code) {
     requestAcessToken();
 }
+

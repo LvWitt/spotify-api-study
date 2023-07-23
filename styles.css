@@ -84,3 +84,8 @@
 .topTracks-function {
     display: none;
 }
+
+.topArtists-results{
+    display: flex;
+    flex-direction: row;
+}
