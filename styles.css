@@ -85,7 +85,28 @@
     display: none;
 }
 
-.topArtists-results{
+.topArtists-results, .topTracks-results{
     display: flex;
-    flex-direction: row;
+    width: 780px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    gap:20px;
+}
+
+.dataItems {
+    text-align: center;
+    width: 180px;
+    height: 250px;
+}
+
+.topArtistsImg, .topTracksImg {
+    width: 150px;
+    height: 150px;
+}
+
+.topArtists-btn-limit{
+    padding: 3px 10px 3px 10px;
 }

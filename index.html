@@ -23,12 +23,12 @@
 
                 <div class="options">
                     <div class="stats-options">
-                        <button class="btn-topTracks">Top Tracks</button>
+                        <button class="btn-topTracks" onclick="getTopTracks()">Top Tracks</button>
                         <button class="btn-topArtists" onclick="getTopArtists()">Top Artists</button>
                         <button class="btn-history" id="btn">Listening History</button>
                     </div>
                     <div class="fetch-options">
-                        <label for="4weeks"> <input type="radio" value="short_term" id="4weeks" name="topic"/> Last 4 weeks </label>
+                        <label for="4weeks"> <input type="radio" value="short_term" id="4weeks" checked="checked" name="topic"/> Last 4 weeks </label>
                         <label for="6months"> <input type="radio" value="medium_term" id="6months" name="topic"/> Last 6 months </label>
                         <label for="alltime"> <input type="radio" value="long_term" id="alltime" name="topic"/> All time </label>
                     </div>
@@ -56,7 +56,14 @@
                     </header>
                     <div class="topArtists-content">
                         <p id="login-warning">You need to log in to view this content.</p>
-                        <div id="topArtists-results"></div>
+                        <div class="topArtists-btn-limit">
+                            <label for="topArtists-btn-limit"> <input type="radio" value="10" id="topArtists-btn-limit" checked="checked"  name="limit"/>10</label>
+                            <label for="topArtists-btn-limit"> <input type="radio" value="20" id="topArtists-btn-limit" name="limit"/>20</label>
+                            <label for="topArtists-btn-limit"> <input type="radio" value="30" id="topArtists-btn-limit" name="limit"/>30</label>
+                            <label for="topArtists-btn-limit"> <input type="radio" value="40" id="topArtists-btn-limit" name="limit"/>40</label>
+                            <label for="topArtists-btn-limit"> <input type="radio" value="50" id="topArtists-btn-limit" name="limit"/>50</label>
+                        </div>
+                        <div id="topArtists-results" class="topArtists-results"></div>
                     </div>
                 </div>
                 <div class="topTracks-function">
@@ -65,6 +72,14 @@
                     </header>
                     <div class="topTracks-content">
                         <p id="login-warning">You need to log in to view this content.</p>
+                        <div class="topTracks-btn-limit">
+                            <label for="topTracks-btn-limit"> <input type="radio" value="10" id="topTracks-btn-limit" checked="checked"  name="limit2"/>10</label>
+                            <label for="topTracks-btn-limit"> <input type="radio" value="20" id="topTracks-btn-limit" name="limit2"/>20</label>
+                            <label for="topTracks-btn-limit"> <input type="radio" value="30" id="topTracks-btn-limit" name="limit2"/>30</label>
+                            <label for="topTracks-btn-limit"> <input type="radio" value="40" id="topTracks-btn-limit" name="limit2"/>40</label>
+                            <label for="topTracks-btn-limit"> <input type="radio" value="50" id="topTracks-btn-limit" name="limit2"/>50</label>
+                        </div>
+                        <div id="topTracks-results" class="topTracks-results"></div>
                     </div>
                 </div>
             </div>
