@@ -99,7 +99,51 @@ function requestAcessToken(){
     });
     
 }
- 
+ /*
+function refreshToken() {
+    fetch('https://accounts.spotify.com/api/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      },
+      body: new URLSearchParams({
+        client_id,
+        grant_type: 'refresh_token',
+        refresh_token,
+      }),
+    })
+      .then(addThrowErrorToFetch)
+      .then(processTokenResponse)
+      .catch(handleError);
+  }
+
+function handleError(error) {
+    console.error(error);
+}
+
+async function addThrowErrorToFetch(response) {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw { response, error: await response.json() };
+    }
+}
+
+function processTokenResponse(data) {
+    console.log(data);
+
+    access_token = data.access_token;
+    refresh_token = data.refresh_token;
+
+    const t = new Date();
+    expires_at = t.setSeconds(t.getSeconds() + data.expires_in);
+
+    window.localStorage.setItem('access_token', access_token);
+    window.localStorage.setItem('refresh_token', refresh_token);
+    window.localStorage.setItem('expires_at', expires_at);
+
+}
+*/
 
 async function getProfile(accessToken) {
     accessToken = window.localStorage.getItem('access_token');
@@ -139,7 +183,9 @@ function getTopArtists() {
                 let name = item.name;
                 let url = item.external_urls.spotify;
                 let image = item.images[1].url;
-                resultsHtml += '<div class="dataItems"><a href="' + url + '" target="_blank"><img class="topArtistsImg" src="' + image + '"></a><h4 class="title">' + (i + 1) + '. ' + name + '</h4></div>';
+                resultsHtml += '<div class="dataItems"><a href="' 
+                + url + '" target="_blank"><img class="topArtistsImg" src="' + image + '"></a><p class="title">' 
+                + (i + 1) + '. ' + name + '</p></div>';
             });
             $('#topArtists-results').html(resultsHtml);
             },
@@ -167,12 +213,13 @@ function getTopTracks() {
 
           let resultsHtml = '';
           response.items.forEach((item, i) => {
-              let name = item.name;
               let trackName = item.name;
               let artistName = item.artists[0].name;
               let url = item.external_urls.spotify;
               let image = item.album.images[1].url;
-              resultsHtml += '<div class="dataItems"><a href="' + url + '" target="_blank"><img class="topTracksImg" src="' + image + '"></a>' + '<h4>' + (i + 1) + '. ' + trackName + ' <br>' + artistName + '</h4>' + '</div>';
+              resultsHtml += '<div class="dataItems"><a href="' 
+              + url + '" target="_blank"><img class="topTracksImg" src="' + image + '"></a>' 
+              + '<p>' + (i + 1) + '. ' + trackName + ' <br>' + artistName + '</p>' + '</div>';
           });
           $('#topTracks-results').html(resultsHtml);
           },

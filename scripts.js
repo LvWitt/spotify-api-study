@@ -6,7 +6,7 @@
         const valueDateStart = $("#valueDateStart").val();
         const valueDateEnd = $("#valueDateEnd").val();
         console.log(valueDateStart);
-
+        
         for (var i = 0, len = data.length; i < len; i++) {
             var dentro = [];
             if (testDateRange(valueDateStart, valueDateEnd, data[i].endTime)){
@@ -17,7 +17,7 @@
             }
           
         }
-
+        
         //console.log(spotifyData)
 
         function simpleTemplating(data) {
@@ -79,14 +79,15 @@
 
 $(document).ready(function(){
     function cleanDisplayFunction(){
-        $(".history-function").css('display', 'none');
-        $(".topArtists-function").css('display', 'none');
-        $(".topTracks-function").css('display', 'none');
+        $(".listening-history-section").css('display', 'none');
+        $(".topArtists-section").css('display', 'none');
+        $(".topTracks-section").css('display', 'none');
+        $(".topArtists-content").css('display', 'none');
     }
 
   $(".btn-history").click(function() {
     cleanDisplayFunction();
-    $(".history-function").css('display', 'contents');
+    $(".listening-history-section").css('display', 'contents');
     historyDataFunction();
   });
 
@@ -96,12 +97,12 @@ $(document).ready(function(){
 
   $(".btn-topArtists").click(function() {
       cleanDisplayFunction();
-      $(".topArtists-function").css('display', 'contents');
+      $(".topArtists-section").css('display', 'contents');
   });
 
   $(".btn-topTracks").click(function() {
       cleanDisplayFunction();
-      $(".topTracks-function").css('display', 'contents');
+      $(".topTracks-section").css('display', 'contents');
   });
 
 });
