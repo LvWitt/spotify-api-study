@@ -43,7 +43,7 @@ function requestAuthorization(){
         response_type: 'code',
         client_id: client_id,
         redirect_uri: redirect_uri,
-        scope: 'user-read-private user-read-email user-top-read',
+        scope: 'user-read-private user-read-email user-top-read user-read-recently-played',
         state: state,
         code_challenge_method: 'S256',
         code_challenge: codeChallenge
@@ -54,7 +54,6 @@ function requestAuthorization(){
 }
 
 function requestAcessToken(){
-    console.log('2');
     let codeVerifier = window.localStorage.getItem('code_verifier');
 
     let body = new URLSearchParams({
@@ -77,7 +76,7 @@ function requestAcessToken(){
         throw new Error('HTTP status ' + response.status);
         }
         return response.json();
-    })
+    }, historyDataFunction())
     .then(data => {
         window.localStorage.setItem('access_token', data.access_token);
         console.log("acess token setado");
@@ -86,10 +85,7 @@ function requestAcessToken(){
         console.error('Error:', error);
     });
 
-    //console.log("RESPONSE");
-    //console.log(response);
     getProfile(response.access_token).then(async (data) => {
-        //loginPlaceholder.innerHTML = `<p>${data.display_name}</p>`;
         var content = '<p> Logged in, ' + data.display_name + '!</p>';
         $('#login-warning').remove();
         $('#login-warning').remove();
@@ -99,51 +95,6 @@ function requestAcessToken(){
     });
     
 }
- /*
-function refreshToken() {
-    fetch('https://accounts.spotify.com/api/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-      },
-      body: new URLSearchParams({
-        client_id,
-        grant_type: 'refresh_token',
-        refresh_token,
-      }),
-    })
-      .then(addThrowErrorToFetch)
-      .then(processTokenResponse)
-      .catch(handleError);
-  }
-
-function handleError(error) {
-    console.error(error);
-}
-
-async function addThrowErrorToFetch(response) {
-    if (response.ok) {
-      return response.json();
-    } else {
-      throw { response, error: await response.json() };
-    }
-}
-
-function processTokenResponse(data) {
-    console.log(data);
-
-    access_token = data.access_token;
-    refresh_token = data.refresh_token;
-
-    const t = new Date();
-    expires_at = t.setSeconds(t.getSeconds() + data.expires_in);
-
-    window.localStorage.setItem('access_token', access_token);
-    window.localStorage.setItem('refresh_token', refresh_token);
-    window.localStorage.setItem('expires_at', expires_at);
-
-}
-*/
 
 async function getProfile(accessToken) {
     accessToken = window.localStorage.getItem('access_token');
@@ -177,14 +128,13 @@ function getTopArtists() {
             },
             success: function(response) {
             $('#topArtists-results').empty();
-
             let resultsHtml = '';
             response.items.forEach((item, i) => {
                 let name = item.name;
                 let url = item.external_urls.spotify;
                 let image = item.images[1].url;
                 resultsHtml += '<div class="dataItems"><a href="' 
-                + url + '" target="_blank"><img class="topArtistsImg" src="' + image + '"></a><p class="title">' 
+                + url + '" target="_blank"><img class="topArtistsImg" src="' + image + '"></a><p class="artistName">' 
                 + (i + 1) + '. ' + name + '</p></div>';
             });
             $('#topArtists-results').html(resultsHtml);
@@ -210,7 +160,7 @@ function getTopTracks() {
           },
           success: function(response) {
           $('#topTracks-results').empty();
-
+          console.log(response);
           let resultsHtml = '';
           response.items.forEach((item, i) => {
               let trackName = item.name;
@@ -219,9 +169,42 @@ function getTopTracks() {
               let image = item.album.images[1].url;
               resultsHtml += '<div class="dataItems"><a href="' 
               + url + '" target="_blank"><img class="topTracksImg" src="' + image + '"></a>' 
-              + '<p>' + (i + 1) + '. ' + trackName + ' <br>' + artistName + '</p>' + '</div>';
+              + '<p class="trackName">' + (i + 1) + '. ' + trackName + ' <br><b>' + artistName + '</b></p>' + '</div>';
           });
           $('#topTracks-results').html(resultsHtml);
+          },
+      });
+  }
+}
+
+function getRecentlyPlayedTracks() {
+  accessToken = window.localStorage.getItem('access_token');
+  if (accessToken) {
+      //let time_range = $("input[type='radio']:checked").val().toString();
+      //let limit = $("input[type='radio']#topTracks-btn-limit:checked").val().toString();
+
+      $.ajax({
+            url: 'https://api.spotify.com/v1/me/player/recently-played',
+            data: {
+              limit: '50'
+            },
+          headers: {
+              Authorization: 'Bearer ' + accessToken,
+          },
+          success: function(response) {
+          console.log(response);
+          let resultsHtml = '';
+          response.items.forEach((item, i) => {
+              let trackName = item.track.name;
+              let artistName = item.track.artists[0].name;
+              let url = item.track.external_urls.spotify;
+              let image = item.track.album.images[1].url;
+              resultsHtml += '<div class="dataItems"><a href="' 
+              + url + '" target="_blank"><img class="topTracksImg" src="' + image + '"></a>' 
+              + '<p class="trackName">' + (i + 1) + '. ' + trackName + ' <br><b>' + artistName + '</b></p>' + '</div>';
+          });
+          console.log(resultsHtml);
+          //$('#topTracks-results').html(resultsHtml);
           },
       });
   }

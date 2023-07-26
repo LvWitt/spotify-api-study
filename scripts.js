@@ -83,12 +83,12 @@ $(document).ready(function(){
         $(".topArtists-section").css('display', 'none');
         $(".topTracks-section").css('display', 'none');
         $(".topArtists-content").css('display', 'none');
+        $(".topTracks-content").css('display', 'none');
     }
 
   $(".btn-history").click(function() {
     cleanDisplayFunction();
     $(".listening-history-section").css('display', 'contents');
-    historyDataFunction();
   });
 
   $(".btn-filter").click(function(){
@@ -98,11 +98,13 @@ $(document).ready(function(){
   $(".btn-topArtists").click(function() {
       cleanDisplayFunction();
       $(".topArtists-section").css('display', 'contents');
+      $(".topArtists-content").css('display', 'contents');
   });
 
   $(".btn-topTracks").click(function() {
       cleanDisplayFunction();
       $(".topTracks-section").css('display', 'contents');
+      $(".topTracks-content").css('display', 'contents');
   });
 
 });

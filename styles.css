@@ -4,15 +4,38 @@
     text-align: center;
     border: 1px solid black;
     margin: 20px 0px 0px 0px;
+    /* From https://css.glass */
+    background: rgba(36, 36, 36, 0.63);
+    border-radius: 10px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    color: white;
+}
 
+html {
+    background-color: #1db954;
+    background-image: linear-gradient(160deg, #1db954 0%, #80D0C7 100%);
+    font-family: 'Open Sans', sans-serif;
 }
 
 .main-header, .stats-options, .fetch-options{
-    border: 1px solid black;
     margin: -1px -1px -1px -1px;
     padding:20px 0px 20px 0px;
 }
 
+.stats-options {
+    display: flex;
+    gap: 10px;
+}
+
+.main-header{
+    border-radius: 10px;
+}
+
+.stats-options, .fetch-options{
+    border: 1px solid black;
+}
 
 .stats-options, .fetch-options{
     display: flex;
@@ -22,13 +45,19 @@
 }
 
 .main-content{
-    background-color: rgb(248, 248, 248);
+    background: rgba(36, 36, 36, 0.63);
+    border-radius: 12px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
     width: 900px;
     height: 800px;
     margin: 10px 0px 0px 30px;
+    color: white;
     display: flex;
     align-items: center;
     flex-direction: column;
+    overflow: auto;
 }
 
 .app-area{
@@ -65,6 +94,10 @@
     width: 120px;
 }
 
+.trackName, .artistName{
+    color: white;
+}
+
 .function-header {
     margin-right: auto;
     margin-left: 30px;
@@ -75,13 +108,18 @@
 
 .listening-history-section {
     display: none;
+    font-size: 12px;
 }
 
-.topArtists-section, .topArtists-content {
+.topArtists-section {
     display: contents;
 }
 
-.topTracks-section, .topTracks-content {
+.topArtists-content{
+    display: none;
+}
+
+.topTracks-section, .topTracks-content{
     display: none;
 }
 
@@ -93,7 +131,7 @@
     margin-left: auto;
     margin-right: auto;
     justify-content: center;
-    gap:20px;
+    gap:10px;
 }
 
 .dataItems {
@@ -109,4 +147,6 @@
 
 .topArtists-btn-limit, .topTracks-btn-limit{
     padding: 3px 10px 3px 10px;
+    margin-left: auto;
+    margin-right: 50px;
 }
