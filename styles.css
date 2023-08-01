@@ -115,11 +115,19 @@ html {
     display: contents;
 }
 
+.dashboard-section{
+    display: none;
+}
+
 .topArtists-content{
     display: none;
 }
 
 .topTracks-section, .topTracks-content{
+    display: none;
+}
+
+.recentlyPlayedTracks{
     display: none;
 }
 
@@ -149,4 +157,64 @@ html {
     padding: 3px 10px 3px 10px;
     margin-left: auto;
     margin-right: 50px;
+}
+
+.recentlyPlayed-results {
+    display: flex;
+    width: 780px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    gap: 10px;
+    font-size: 10px;
+}
+
+.recentlyPlayedImg{
+    width: 50px;
+}
+
+.recentlyPlayedImgSection{
+    width: 60px;
+}
+
+.recentlyPlayedSection {
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.login-warning {
+    font-size: 22px;
+}
+
+.login-message-menu, .login-warning-menu {
+    font-size: 14px;
+}
+
+.recentlyPlayed-data-container ul, tr {
+    padding: 0;
+    margin: 0;
+}
+
+.recentlyPlayed-data-container li, td {
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    background: #000000;
+    color: #666;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.recentlyPlayed-data-container li, td:first-child{
+    width: 60px;
+    text-align: center;
+}
+
+.recentlyPlayed-data-container li, td:nth-child(2){
+    width: 200px;
+}
+
+.recentlyPlayed-data-container li, td:nth-child(3){
+    width: 120px;
 }

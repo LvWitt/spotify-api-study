@@ -79,17 +79,16 @@ function requestAcessToken(){
     }, historyDataFunction())
     .then(data => {
         window.localStorage.setItem('access_token', data.access_token);
-        console.log("acess token setado");
     })
     .catch(error => {
         console.error('Error:', error);
     });
 
-    getProfile(response.access_token).then(async (data) => {
-        var content = '<p> Logged in, ' + data.display_name + '!</p>';
-        $('#login-warning').remove();
-        $('#login-warning').remove();
-        $('#login-warning').remove();
+    getProfile(response.access_token).then((data) => {
+
+        var content = '<p class="login-message-menu"> Logged in, ' + data.display_name + '!</p>';
+        $('.login-warning').remove();
+        $('.login-warning-menu').remove();
         $('#btn-login').css('display', 'none')
         $('#login-content').append(content);
     });
@@ -179,6 +178,7 @@ function getTopTracks() {
 
 function getRecentlyPlayedTracks() {
   accessToken = window.localStorage.getItem('access_token');
+
   if (accessToken) {
       //let time_range = $("input[type='radio']:checked").val().toString();
       //let limit = $("input[type='radio']#topTracks-btn-limit:checked").val().toString();
@@ -193,27 +193,41 @@ function getRecentlyPlayedTracks() {
           },
           success: function(response) {
           console.log(response);
-          let resultsHtml = '';
+          let resultsHtml = '<table class="recentlyPlayedSection">' + '<thead>' + '<tr>' + '<th></th>' + '<th>Artist</th>' + '<th>Track</th>' + '<th>Date</th>' + '</tr>' + '</thread>' + '<tr>';
           response.items.forEach((item, i) => {
               let trackName = item.track.name;
               let artistName = item.track.artists[0].name;
               let url = item.track.external_urls.spotify;
               let image = item.track.album.images[1].url;
-              resultsHtml += '<div class="dataItems"><a href="' 
-              + url + '" target="_blank"><img class="topTracksImg" src="' + image + '"></a>' 
-              + '<p class="trackName">' + (i + 1) + '. ' + trackName + ' <br><b>' + artistName + '</b></p>' + '</div>';
+              let datePlayed = new Date (item.played_at);
+              resultsHtml += '<tr>' + '<td class="recentlyPlayedImgSection">' + '<a href="' + url 
+              + '" target="_blank"><img class="recentlyPlayedImg" src="' + image + '"></a>' + '</td>' 
+              + '<td class="trackName">' + (i + 1) + '. ' + trackName + '</td>' 
+              + '<td><b>' + artistName + '</b></td>' 
+              + '<td>' + datePlayed.toUTCString(); + '</td>' + '</tr>';
           });
+          resultsHtml += '</table>';
           console.log(resultsHtml);
-          //$('#topTracks-results').html(resultsHtml);
+          $('.recentlyPlayed-data-container').html(resultsHtml);
           },
       });
   }
 }
 
+function setDashboard(){
+    accessToken = window.localStorage.getItem('access_token');
+
+    getProfile(accessToken).then((data) => {
+        let resultsHtml = '<p>Hi, ' + data.display_name + '!</p>'
+        
+        $('.dashboard-content').html(resultsHtml);
+    });
+}
+
+
 const urlParams = new URLSearchParams(window.location.search);
 let code = urlParams.get('code');
-//console.log("CODE");
-//console.log(code);
+
 if (code) {
     requestAcessToken();
 }

@@ -21,7 +21,7 @@
         //console.log(spotifyData)
 
         function simpleTemplating(data) {
-          var html = '<table>' + '<thead>' + '<tr>' + '<th>Artist</th>' + '<th>Song</th>' + '<th>Date</th>' + '</tr>' + '</thread>' + '<tr>';
+          var html = '<table>' + '<thead>' + '<tr>' + '<th>Artist</th>' + '<th>Track</th>' + '<th>Date</th>' + '</tr>' + '</thread>' + '<tr>';
             //console.log(data)
           $.each(data, function(index, item){
             var i = 0;
@@ -84,7 +84,14 @@ $(document).ready(function(){
         $(".topTracks-section").css('display', 'none');
         $(".topArtists-content").css('display', 'none');
         $(".topTracks-content").css('display', 'none');
+        $(".recentlyPlayedTracks").css('display', 'none');
+        $(".dashboard-section").css('display', 'none');
     }
+
+  $(".btn-dashboard").click(function() {
+    cleanDisplayFunction();
+    $(".dashboard-section").css('display', 'contents');
+  });
 
   $(".btn-history").click(function() {
     cleanDisplayFunction();
@@ -105,6 +112,11 @@ $(document).ready(function(){
       cleanDisplayFunction();
       $(".topTracks-section").css('display', 'contents');
       $(".topTracks-content").css('display', 'contents');
+  });
+
+  $(".btn-recentlyPlayed").click(function() {
+    cleanDisplayFunction();
+    $(".recentlyPlayedTracks").css('display', 'contents');
   });
 
 });
