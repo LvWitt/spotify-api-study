@@ -218,3 +218,13 @@ html {
 .recentlyPlayed-data-container li, td:nth-child(3){
     width: 120px;
 }
+
+.dashboard-profile {
+    display: flex;   
+    background-color: #4b4b4b;
+    padding: 20px;
+}
+
+.dashboard-profile-picture {
+    width: 150px;
+}

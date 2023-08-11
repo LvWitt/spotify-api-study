@@ -218,8 +218,13 @@ function setDashboard(){
     accessToken = window.localStorage.getItem('access_token');
 
     getProfile(accessToken).then((data) => {
-        let resultsHtml = '<p>Hi, ' + data.display_name + '!</p>'
-        
+        let profileImage = data.images[1].url;
+        let profileName = data.display_name;
+
+        let resultsHtml = '<div class="dashboard-profile">'
+        + '<img class="dashboard-profile-picture" src="' + profileImage + '"><img/>'
+        + '<p>Hi, ' + profileName + '!</p>' 
+
         $('.dashboard-content').html(resultsHtml);
     });
 }
