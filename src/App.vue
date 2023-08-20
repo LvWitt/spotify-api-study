@@ -1,17 +1,20 @@
 <template>
     <div class="app-area">
-
+        <MenuSidebar />
         <div class="main-content"><RouterView /></div>
     </div>
     
 </template>
 
 <script>
-    
+    import MenuSidebar from './components/MenuSidebar.vue';
 
-export default {
-  
+    export default {
+    components: {
+        MenuSidebar
+    }
 }
+
 </script>
 
 <style>
