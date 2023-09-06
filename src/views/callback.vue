@@ -12,17 +12,16 @@
             console.log("Aqui foi")
             const authStore = useAuthStore();
             const urlParams = new URLSearchParams(window.location.search)
-            console.log("LOLLOLOLOLOLOLOLOLOLOLOLOL");
             if (urlParams.has("code")) {
-                console.log("YAYAYAYAYAYAYAYAYAYA");
+                console.log("request accessToken");
                 authStore.requestAccessToken();
             }
 
             if (localStorage.getItem("access_token")){
-                console.log("ACESOOOOOOOO TOKENNNNNNN");
+                console.log("access_token found");
             }
             else {
-                console.log("RIP");
+                console.log("Error");
             }
             
         },
