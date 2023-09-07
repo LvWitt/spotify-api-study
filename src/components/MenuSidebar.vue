@@ -7,7 +7,6 @@
             <div id="login-content">
                     <p class="login-warning-menu"></p>
             </div>
-            <button class="btn-login" id="btn-login">Login</button>
         </div>
         <div class="options">
             <div class="stats-options">
