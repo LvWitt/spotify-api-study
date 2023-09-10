@@ -5,10 +5,10 @@
         </header>
         <div class="topTracks-content">
             <div id="topTracks-results" class="topTracks-results">
-                <div v-for="track in topTracks" :key="track.name">      
+                <div v-for="(track, index) in topTracks" :key="track.name">      
                         <div class="dataItems">
                             <a :href="track.external_urls.spotify" target="_blank"><img class="topTracksImg" :src="track.album.images[1].url"></a>
-                            <p class="trackName">{{track.name}}<br><b>{{track.artists[0].name}}</b></p>
+                            <p class="trackName"><b>{{index+1}}</b> - {{track.name}}<br><b>{{track.artists[0].name}}</b></p>
                         </div>
                 </div>
             </div>
@@ -33,7 +33,6 @@
                     } 
                 });
 
-                
                 this.topTracks = request.data.items;
             }
     } 
