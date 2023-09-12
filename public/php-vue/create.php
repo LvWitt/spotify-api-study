@@ -1,5 +1,4 @@
 
-    
 <?php
 if(isset($_SERVER["HTTP_ORIGIN"]))
 {
@@ -35,10 +34,6 @@ $conn = new PDO("mysql:host=localhost:3307;dbname=stats-app", "root", "");
 $sql = "INSERT INTO tracks (id, track_name, artist_name, img_url) VALUES (:id, :track_name, :artist_name, :img_url)";
 $result = $conn->prepare($sql);
  
-
-
-
-
 // execute the query
 $result->execute([
     ":id" => $_POST["id"],
