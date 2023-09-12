@@ -5,6 +5,8 @@ import Callback from '../views/callback.vue'
 import TopArtists from '../views/topArtists.vue'
 import TopTracks from '../views/topTracks.vue'
 import ListeningHistory from '../views/listeningHistory.vue'
+import Manager from '../views/manager.vue'
+
 
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
@@ -38,7 +40,13 @@ const router = createRouter({
             path: '/ListeningHistory',
             name: 'ListeningHistory',
             component: ListeningHistory
-        }
+        },
+        {
+            path: '/Manager',
+            name: 'Manager',
+            component: Manager
+        },
+
     ]
 });
 
