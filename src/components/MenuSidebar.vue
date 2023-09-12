@@ -10,11 +10,10 @@
         </div>
         <div class="options">
             <div class="stats-options">
-                <button class="btn-dashboard" @click="$router.push('/Charts')">Dashboard</button>
                 <button class="btn-topTracks" @click="$router.push('/TopTracks')">Top Tracks</button>
                 <button class="btn-topArtists" @click="$router.push('/TopArtists')">Top Artists</button>
                 <button class="btn-history" @click="$router.push('/ListeningHistory')">Listening History</button>
-                <button class="btn-recentlyPlayed" onclick="getRecentlyPlayedTracks()">Recently Played</button>
+                <button class="btn-recentlyPlayed" @click="$router.push('/Manager')">Manager</button>
             </div>
             <div class="fetch-options">
                 <label for="4weeks"> <input type="radio" value="short_term" id="4weeks"  name="topic"/> Last 4 weeks </label>
