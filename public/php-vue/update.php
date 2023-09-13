@@ -1,5 +1,5 @@
 <?php
-if (isset($_SERVER["HTTP_ORIGIN"])) {
+ if (isset($_SERVER["HTTP_ORIGIN"])) {
     header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
 } else {
     header("Access-Control-Allow-Origin: *");
@@ -18,20 +18,25 @@ if ($_SERVER["REQUEST_METHOD"] == "OPTIONS") {
     exit(0);
 }
 
-$conn = new PDO("mysql:host=localhost:3307;dbname=stats-app", "root", "");
-if (!$conn) {
-    echo "Error! Db Not Found";
-}
+$conn = new PDO("mysql:host=localhost:8889;dbname=test", "root", "root");
 
-$sql = "INSERT INTO tracks (id, track_name, artist_name, img_url) VALUES (:id, :track_name, :artist_name, :img_url)";
+$sql = "UPDATE tracks SET track_name = :track_name, artist_name = :artist_name, img_url = :img_url  WHERE id = :id";
 $result = $conn->prepare($sql);
-
+ 
 $result->execute([
     ":id" => $_POST["id"],
     ":track_name" => $_POST["track_name"],
     ":artist_name" => $_POST["artist_name"],
     ":img_url" => $_POST["img_url"],
 ]);
+ 
 
-echo "Done";
+$sql = "SELECT * FROM tracks WHERE id = :id";
+$result = $conn->prepare($sql);
+$result->execute(array(
+    ":id" => $_POST["id"]
+));
+$data = $result->fetch();
+
+echo json_encode($data);
 ?>
