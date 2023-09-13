@@ -47,6 +47,7 @@ const router = createRouter({
             component: Manager
         },
 
+
     ]
 });
 
