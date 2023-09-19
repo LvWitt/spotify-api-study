@@ -4,7 +4,7 @@
             <div class="login-header">
                 <h1 class="login-message">Log in to your</h1>
                 <h1 class="login-message">Spotify account</h1>
-                <h2 class="login-sub-message">to check your listening stats</h2>
+                <h2 class="login-sub-message">and check your listening stats</h2>
             </div>
             <div class="login-section">
                 <button id="login-btn" class="login-btn" @click="authStore.redirectToAuth();"><b>Log in</b></button>
@@ -31,6 +31,8 @@ export default {
 html,
 body {
     height: 100%;
+    margin: 0px;
+    padding: 0px;
 }
 
 .login-page {
@@ -47,12 +49,16 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 30px;
+    margin-left: 35px;
 }
 
 .login-message {
     font-size: 70px;
+    margin: 0px;
+    padding: 0px;
+    line-height:75px;
 }
+
 
 .login-header {
     font-family: 'Poppins', sans-serif;
@@ -82,8 +88,10 @@ body {
 }
 
 .login-sub-message {
+    margin-top: 15px;
+    padding: 0px;
     text-align: end;
-    padding: 10px;
+    font-size: 30px;
 }
 
 .login-wrapper {
