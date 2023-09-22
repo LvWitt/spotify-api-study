@@ -30,7 +30,7 @@ export const useAuthStore = defineStore("auth", () => {
             response_type: "code",
             client_id: "aeda74075eec4ffa897944adb9682ba5",
             scope: scope,
-            redirect_uri: "http://localhost:8080/Callback",
+            redirect_uri: "https://lvwitt.github.io/spotify-api-study/Callback",
             state: state,
             code_challenge_method: "S256",
             code_challenge: codeChallenge,
@@ -51,14 +51,13 @@ export const useAuthStore = defineStore("auth", () => {
     }
 
     async function requestAccessToken() {
-        console.log("IAIAIAIAIAIAIAIAIAIAIAIAIAIIAI");
         const authCode = getAuthCodeFromURL()
         const codeVerifier = localStorage.getItem(LOCALSTORAGE_CODE_VERIFIER);
     
         const args = new URLSearchParams({
           grant_type: "authorization_code",
           code: authCode,
-          redirect_uri: "http://localhost:8080/Callback",
+          redirect_uri: "https://lvwitt.github.io/spotify-api-study/Callback",
           client_id: "aeda74075eec4ffa897944adb9682ba5",
           code_verifier: codeVerifier,
         });
@@ -72,7 +71,7 @@ export const useAuthStore = defineStore("auth", () => {
           localStorage.setItem(LOCALSTORAGE_REFRESH_TOKEN, refresh_token);
           localStorage.setItem(LOCALSTORAGE_TOKEN_EXPIRATION, expiration.toString());
           console.log("LOCALSTORAGE VARIABLES DONE");
-          window.location.replace("http://localhost:8080/TopArtists");
+          window.location.replace("https://lvwitt.github.io/spotify-api-study/TopArtists");
         } catch (fail) {
           console.error(fail)
         }
@@ -101,7 +100,7 @@ export const useAuthStore = defineStore("auth", () => {
         } catch (e) {
         }
       }
-
+ 
     
 
     return {redirectToAuth, requestAccessToken}
