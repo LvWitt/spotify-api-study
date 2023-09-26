@@ -76,7 +76,7 @@ tr {
 td {
     margin-bottom: 5px;
     padding: 5px 10px;
-    background: #00000086;
+    background: rgba(0, 0, 0, 0.315);
     color: #fafafa;
     overflow: hidden;
     white-space: nowrap;
