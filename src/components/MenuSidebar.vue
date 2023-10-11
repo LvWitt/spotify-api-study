@@ -4,8 +4,12 @@
             <header>
                 <h1>Stats for Spotify</h1>
             </header>
-            <div id="login-content">
-                <p class="login-warning-menu"></p>
+            <div class="login-content">
+              <div class="user-info">
+                <img class="profile-img"  v-bind:src="userImg">
+                <p>{{userProfile.display_name}}</p>
+              </div>
+                  <button class="btn-logout" @click="$router.push('/')">Log out</button>
             </div>
         </div>
         <div class="options">
@@ -19,7 +23,100 @@
     </aside>
 </template>
 
+<script>
+  import axios from 'axios';
+
+  export default {
+      data(){
+          return {
+              userProfile: [],
+              userImg: ""
+          }
+      },
+      async created() {
+
+          console.log("GERUSERPROFILEDATA")
+
+          const accessToken = localStorage.getItem('access_token');
+      
+          const request = await axios.get('https://api.spotify.com/v1/me', { 
+              headers: { 
+                  Authorization: `Bearer ${accessToken}` 
+              } 
+          });
+      
+          this.userProfile = request.data;
+          this.userImg = request.data.images[0].url;
+          console.log(this.userImg);
+          console.log("DATA");
+          console.log(this.userProfile ); 
+      }
+  }
+</script>
+
 <style>
+.login-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.589);
+  padding-bottom: 10px;
+}
+
+.user-info{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-img {
+  object-fit: cover;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+}
+
+.btn-logout {
+  appearance: none;
+    backface-visibility: hidden;
+    background-color: #444444;
+    border-radius: 8px;
+    border-style: none;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Inter, -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: normal;
+    line-height: 1.5;
+    outline: none;
+    overflow: hidden;
+    padding: 5px 10px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transform: translate3d(0, 0, 0);
+    transition: all .3s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: top;
+    white-space: nowrap;
+    width: 70px;
+}
+
+.btn-logout:hover {
+  background-color: #000000;
+  opacity: 1;
+  transform: translateY(0);
+  transition-duration: .35s;
+}
+
 .btn-topTracks,
 .btn-topArtists,
 .btn-history,
