@@ -109,7 +109,7 @@ export default {
     backdrop-filter: blur(0px);
     -webkit-backdrop-filter: blur(0px);
     width: 900px;
-    height: 800px;
+    height: 750px;
     margin: 10px 0px 0px 30px;
     color: white;
     display: flex;
