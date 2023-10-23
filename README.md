@@ -2,7 +2,7 @@
 This website displays your top Artists and Tracks organized by different time periods, also you can view your recently listening tracks.
 
 There is a functionality under development to register songs that are not on Spotify in the database using Laravel API -> https://github.com/LvWitt/stats-app-api
-
+(At the moment this only works on localhost)
 
 # spotify-stats-spa
 
